@@ -22,26 +22,39 @@ Google discontinued third-party Conversational Actions, so the Nest version is a
 | 82:00 | Resume for the last eight minutes |
 | 90:00 | Allotted playtime is over; rest for the day |
 
-## Alexa deployment
+## Lowest-cost Alexa deployment (recommended)
 
-Prerequisites: an Amazon Developer account, an AWS account, and Node.js 20 or newer.
+Use **Alexa-hosted Node.js**. It does not require a separate AWS account, Lambda configuration, or paid server. Amazon hosts the code within the allowances provided for Alexa-hosted skills.
 
-1. Create an AWS Lambda function using the Node.js 20 runtime. Use `alexa/lambda/index.handler` as its handler.
-2. Zip the contents of this repository so that `alexa/lambda/index.js` is included, and upload it to Lambda. The code uses only Node.js built-ins; there is no production dependency installation step.
-3. Add the **Alexa Skills Kit** trigger to the Lambda function. For a public deployment, restrict it to the new skill ID.
-4. In the Alexa Developer Console, create a **Custom** skill named **Eye Rest** with the **Custom** model.
-5. Copy `alexa/skill-package/interactionModels/custom/en-US.json` into the JSON editor under **Build > Interaction Model** and build the model.
-6. Set the skill endpoint to the Lambda ARN. If using the included manifest with ASK CLI, replace `REPLACE_WITH_LAMBDA_ARN` in `alexa/skill-package/skill.json` first.
-7. Under **Build > Permissions**, enable **Reminders**. The included manifest already declares `alexa::alerts:reminders:skill:readwrite`.
-8. Test the skill, grant Reminders permission in the Alexa app, and say: “Alexa, open Eye Rest.”
+Prerequisite: a free [Amazon Developer account](https://developer.amazon.com/). Node.js is needed on your computer only to run the local tests.
+
+1. Open the [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask) and select **Create Skill**.
+2. Name it **Eye Rest**, choose **English (US)**, and continue.
+3. Choose **Other** for the experience and **Custom** for the model.
+4. Under **Hosting services**, choose **Alexa-hosted (Node.js)**. Select the hosting region closest to you.
+5. Choose **Start from Scratch**, review the selections, and create the skill. Amazon provisions the hosted endpoint automatically; do not create an AWS Lambda function.
+6. On **Build > Interaction Model > JSON Editor**, replace the editor contents with `alexa/skill-package/interactionModels/custom/en-US.json`. Save and select **Build Skill**.
+7. On the **Code** tab:
+   - Replace `lambda/index.js` with `alexa/lambda/index.js` from this project.
+   - Create `lambda/schedule.js` and paste in `alexa/lambda/schedule.js`.
+   - Create `lambda/reminders.js` and paste in `alexa/lambda/reminders.js`.
+   - The generated `lambda/package.json` may be left in place. Eye Rest uses only Node.js built-ins and does not require another package.
+   - Select **Save**, then **Deploy**.
+8. Under **Build > Permissions**, enable **Reminders**. The account using the Echo must also grant Eye Rest permission in the Alexa app.
+9. On the **Test** tab, change testing to **Development**, enter `open eye rest`, and confirm that Alexa asks whether to begin.
+10. On an Echo signed in to the same Amazon account, say: “Alexa, open Eye Rest.” Grant Reminders permission in the Alexa app when prompted.
+
+The files under `alexa/skill-package` are also suitable for an advanced ASK CLI or self-hosted deployment, but neither is needed for the lowest-cost setup.
 
 Alexa requires both account permission and spoken confirmation before a skill creates reminders. Eye Rest asks “Would you like to start now?” and creates the schedule only after “yes” or an explicit start command.
 
 To cancel, say: “Alexa, ask Eye Rest to cancel my session.” Eye Rest removes only reminders whose spoken text begins with `Eye Rest:`.
 
-## Google Nest setup
+## Lowest-cost Google Nest setup (recommended)
 
-1. Open the Google Home app and join **Public Preview** if the script editor is not available.
+Use Google Home's built-in household script editor. There is no server, cloud project, or paid third-party service to deploy for this version.
+
+1. Open the Google Home app and join **Public Preview** if the script editor is not available. You can also use [Google Home for web](https://home.google.com/automations); this is the recommended creation route on iPhone or iPad.
 2. Go to **Automations > Add > Household > More options > Script editor**. The editor is also available at [home.google.com](https://home.google.com/automations).
 3. Paste `google-home/eye-rest.yaml` into the editor.
 4. Optionally restrict each broadcast to one speaker. Under every `assistant.command.Broadcast`, add:
@@ -56,6 +69,15 @@ To cancel, say: “Alexa, ask Eye Rest to cancel my session.” Eye Rest removes
 6. Say: “Hey Google, start eye rest.”
 
 The Google automation must remain active and depends on the Nest speaker, internet connection, and Google Home automation service. Google Home does not currently offer a third-party conversational skill equivalent to Alexa custom skills.
+
+## Expected cost
+
+| Platform | Recommended hosting | Expected personal-use cost |
+| --- | --- | ---: |
+| Alexa | Alexa-hosted Node.js | $0 within the hosted-skill allowances |
+| Google Nest | Google Home household automation | $0 |
+
+These estimates exclude the cost of the Echo/Nest hardware and internet service you already use. A future service-policy or usage-limit change could affect hosting availability, but this project has no paid API, database, subscription, or third-party hosting dependency.
 
 ## Tests
 
