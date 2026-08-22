@@ -1,0 +1,5 @@
+node_modules/
+.ask/
+*.zip
+coverage/
+.DS_Store

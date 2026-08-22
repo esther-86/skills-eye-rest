@@ -1,0 +1,36 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "eye rest",
+      "intents": [
+        {
+          "name": "StartEyeRestIntent",
+          "samples": [
+            "start",
+            "start eye rest",
+            "begin",
+            "begin a session",
+            "start my play timer",
+            "start the eye rest timer"
+          ]
+        },
+        {
+          "name": "CancelEyeRestIntent",
+          "samples": [
+            "cancel eye rest",
+            "cancel my session",
+            "stop my eye rest session",
+            "delete my eye rest reminders"
+          ]
+        },
+        { "name": "AMAZON.YesIntent", "samples": [] },
+        { "name": "AMAZON.NoIntent", "samples": [] },
+        { "name": "AMAZON.HelpIntent", "samples": [] },
+        { "name": "AMAZON.CancelIntent", "samples": [] },
+        { "name": "AMAZON.StopIntent", "samples": [] },
+        { "name": "AMAZON.FallbackIntent", "samples": [] }
+      ],
+      "types": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "Eye Rest",
+          "summary": "Schedules 20-20-20 eye breaks during a 90-minute play session.",
+          "description": "Eye Rest helps children take regular screen breaks. It announces a 30-second distance-viewing break after each 20-minute play period and ends after 90 minutes.",
+          "examplePhrases": [
+            "Alexa, open Eye Rest",
+            "Alexa, ask Eye Rest to start",
+            "Alexa, ask Eye Rest to cancel my session"
+          ],
+          "keywords": ["eye rest", "screen time", "20 20 20", "children", "timer"]
+        }
+      },
+      "isAvailableWorldwide": false,
+      "testingInstructions": "Enable Reminders permission. Open Eye Rest and answer yes. Confirm nine reminders are created relative to the start time. Use cancel eye rest to remove them.",
+      "category": "HEALTH_AND_FITNESS",
+      "distributionCountries": ["US"]
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "REPLACE_WITH_LAMBDA_ARN"
+        },
+        "interfaces": []
+      }
+    },
+    "permissions": [
+      { "name": "alexa::alerts:reminders:skill:readwrite" }
+    ],
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": true,
+      "isExportCompliant": true,
+      "containsAds": false
+    }
+  }
+}
