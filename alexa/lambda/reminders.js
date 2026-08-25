@@ -2,8 +2,6 @@
 
 const https = require('node:https');
 
-const LABEL_PREFIX = 'Eye Rest:';
-
 function requestJson({ method, url, token, body }) {
   return new Promise((resolve, reject) => {
     const parsed = new URL(url);
@@ -67,7 +65,7 @@ async function createSchedule({ apiEndpoint, apiAccessToken, schedule, requestTi
         method: 'POST',
         url: `${apiEndpoint}/v1/alerts/reminders`,
         token: apiAccessToken,
-        body: reminderPayload({ ...item, text: `${LABEL_PREFIX} ${item.text}` }, requestTime)
+        body: reminderPayload(item, requestTime)
       });
       created.push(result.alertToken);
     }
@@ -89,20 +87,16 @@ async function cancelSchedule({ apiEndpoint, apiAccessToken, request = requestJs
     token: apiAccessToken
   });
   const alerts = Array.isArray(result.alerts) ? result.alerts : [];
-  const owned = alerts.filter(alert => {
-    const content = alert.alertInfo?.spokenInfo?.content || [];
-    return content.some(entry => entry.text?.startsWith(LABEL_PREFIX));
-  });
-  await Promise.all(owned.map(alert => request({
+  // The Reminders API only returns reminders created by this skill.
+  await Promise.all(alerts.map(alert => request({
     method: 'DELETE',
     url: `${apiEndpoint}/v1/alerts/reminders/${encodeURIComponent(alert.alertToken)}`,
     token: apiAccessToken
   })));
-  return owned.length;
+  return alerts.length;
 }
 
 module.exports = {
-  LABEL_PREFIX,
   cancelSchedule,
   createSchedule,
   reminderPayload,

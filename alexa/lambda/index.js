@@ -53,12 +53,17 @@ async function start(event, deps) {
 
   const system = systemContext(event);
   try {
+    // Replace any earlier Eye Rest reminders so sessions never overlap.
+    await deps.cancelSchedule({
+      apiEndpoint: system.apiEndpoint,
+      apiAccessToken: system.apiAccessToken
+    });
     await deps.createSchedule({
       apiEndpoint: system.apiEndpoint,
       apiAccessToken: system.apiAccessToken,
       schedule: SCHEDULE
     });
-    return response('Eye Rest has started. I will remind you to look 20 feet away after 20 minutes. The full session ends in 90 minutes.');
+    return response('Eye Rest has started. I set four eye break reminders, four resume reminders, and one session ending reminder over the next 90 minutes. Your first eye break is in 20 minutes.');
   } catch (error) {
     console.error('Unable to create Eye Rest reminders', error);
     if (error.statusCode === 401 || error.statusCode === 403) {
@@ -88,7 +93,7 @@ async function cancel(event, deps) {
 async function route(event, deps = reminders) {
   if (requestType(event) === 'LaunchRequest') {
     return response(
-      'Welcome to Eye Rest. I can schedule eye breaks for a 90 minute screen-use session. Would you like to start now?',
+      'Welcome to Eye Rest. I can use Alexa reminders to schedule four 30 second eye breaks during a 90 minute screen-use session. Starting now will replace any earlier Eye Rest session. Would you like me to set these reminders?',
       { reprompt: 'Would you like to start Eye Rest?', endSession: false }
     );
   }

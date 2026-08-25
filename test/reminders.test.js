@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { createSchedule, reminderPayload } = require('../alexa/lambda/reminders');
+const { cancelSchedule, createSchedule, reminderPayload } = require('../alexa/lambda/reminders');
 
 test('reminder payload is relative to the moment the schedule is created', () => {
   const now = new Date('2026-08-22T20:00:00.000Z');
@@ -32,6 +32,25 @@ test('createSchedule creates every reminder', async () => {
   assert.equal(calls.length, 2);
   assert.equal(calls[0].method, 'POST');
   assert.equal(calls[0].body.trigger.offsetInSeconds, 1200);
+  assert.equal(calls[0].body.alertInfo.spokenInfo.content[0].text, 'Break');
+});
+
+test('cancelSchedule removes every reminder returned for the skill', async () => {
+  const calls = [];
+  const request = async options => {
+    calls.push(options);
+    if (options.method === 'GET') {
+      return { alerts: [{ alertToken: 'first' }, { alertToken: 'second' }] };
+    }
+    return {};
+  };
+  const count = await cancelSchedule({
+    apiEndpoint: 'https://api.amazonalexa.com',
+    apiAccessToken: 'access-token',
+    request
+  });
+  assert.equal(count, 2);
+  assert.deepEqual(calls.slice(1).map(call => call.method), ['DELETE', 'DELETE']);
 });
 
 test('createSchedule removes earlier reminders after a partial failure', async () => {

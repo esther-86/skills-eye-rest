@@ -6,7 +6,9 @@
         "en-US": {
           "name": "Eye Rest",
           "summary": "Schedules regular eye breaks during a 90-minute screen-use session.",
-          "description": "Eye Rest is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It schedules a 30-second distance-viewing break after each 20-minute work period and ends after 90 minutes.",
+          "description": "Eye Rest is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It creates Alexa reminders for four 30-second distance-viewing breaks, four resume notices, and a final notice over a 90-minute session. Reminders permission is required. Starting a new session replaces any earlier Eye Rest session.",
+          "smallIconUri": "file://assets/images/en-US_smallIcon.png",
+          "largeIconUri": "file://assets/images/en-US_largeIcon.png",
           "examplePhrases": [
             "Alexa, open Eye Rest",
             "Alexa, ask Eye Rest to start",
@@ -16,7 +18,8 @@
         }
       },
       "isAvailableWorldwide": false,
-      "testingInstructions": "Enable Reminders permission. Open Eye Rest and answer yes. Confirm nine reminders are created relative to the start time. Use cancel eye rest to remove them.",
+      "distributionMode": "PUBLIC",
+      "testingInstructions": "Enable Reminders permission for the skill. Say, 'Alexa, open Eye Rest.' Alexa explains that it will set four 30-second eye-break reminders during a 90-minute session and asks for confirmation. Answer 'yes.' Confirm that nine relative reminders are created: breaks at 20:00, 40:30, 61:00, and 81:30; resume notices 30 seconds after each break; and completion at 90:00. Start it again and confirm the earlier nine reminders are replaced rather than duplicated. Say, 'Alexa, ask Eye Rest to cancel my session,' and confirm all Eye Rest reminders are removed.",
       "category": "HEALTH_AND_FITNESS",
       "distributionCountries": ["US"]
     },

@@ -48,7 +48,7 @@ The files under `alexa/skill-package` are also suitable for an advanced ASK CLI 
 
 Alexa requires both account permission and spoken confirmation before a skill creates reminders. Eye Rest asks “Would you like to start now?” and creates the schedule only after “yes” or an explicit start command.
 
-To cancel, say: “Alexa, ask Eye Rest to cancel my session.” Eye Rest removes only reminders whose spoken text begins with `Eye Rest:`.
+Starting a new session removes any earlier Eye Rest reminders before creating the new schedule, which prevents overlapping sessions. To cancel, say: “Alexa, ask Eye Rest to cancel my session.” The Alexa Reminders API exposes only reminders created by this skill, and Eye Rest removes all of them when canceling.
 
 ## Lowest-cost Google Nest setup (recommended)
 
@@ -91,6 +91,6 @@ The tests verify all relative offsets, 30-second breaks, the 90-minute limit, Al
 
 ## Important operational notes
 
-- Starting the Alexa skill more than once creates overlapping sessions. Cancel the current session before starting another.
+- Starting the Alexa skill again replaces the current Eye Rest session.
 - Starting the Google automation more than once may start overlapping automation runs. Stop the active automation in Google Home before restarting.
 - Voice reminders and household automations rely on cloud services and should not be treated as safety-critical timers.
