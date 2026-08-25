@@ -46,7 +46,7 @@ function intentName(event) {
 async function start(event, deps) {
   if (!hasReminderPermission(event)) {
     return response(
-      'Eye Rest needs permission to announce eye breaks while you play. Please enable Reminders permission in the Alexa app, then open Eye Rest again.',
+      'Eye Rest needs permission to announce eye breaks during your screen-use session. Please enable Reminders permission in the Alexa app, then open Eye Rest again.',
       { card: permissionCard() }
     );
   }
@@ -88,7 +88,7 @@ async function cancel(event, deps) {
 async function route(event, deps = reminders) {
   if (requestType(event) === 'LaunchRequest') {
     return response(
-      'Welcome to Eye Rest. I can schedule 20 20 20 eye breaks for a 90 minute play session. Would you like to start now?',
+      'Welcome to Eye Rest. I can schedule eye breaks for a 90 minute screen-use session. Would you like to start now?',
       { reprompt: 'Would you like to start Eye Rest?', endSession: false }
     );
   }
@@ -106,7 +106,7 @@ async function route(event, deps = reminders) {
         return cancel(event, deps);
       case 'AMAZON.HelpIntent':
         return response(
-          'Eye Rest schedules a 30 second eye break after each 20 minute play period, for up to 90 minutes. Say start eye rest to begin, or cancel eye rest to stop.',
+          'Eye Rest schedules a 30 second eye break after each 20 minute screen-use period, for up to 90 minutes. Say start eye rest to begin, or cancel eye rest to stop.',
           { reprompt: 'Say start eye rest to begin.', endSession: false }
         );
       case 'AMAZON.FallbackIntent':

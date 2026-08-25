@@ -19,9 +19,9 @@ test('every break lasts exactly 30 seconds', () => {
   }
 });
 
-test('session ends at 90 minutes with a stop-for-the-day message', () => {
+test('session ends at 90 minutes with a longer-break suggestion', () => {
   const last = SCHEDULE.at(-1);
   assert.equal(last.offsetSeconds, SESSION_MINUTES * 60);
   assert.equal(last.kind, 'complete');
-  assert.match(last.text, /rest for the day/i);
+  assert.match(last.text, /longer break/i);
 });

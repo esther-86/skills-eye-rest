@@ -5,14 +5,14 @@
       "locales": {
         "en-US": {
           "name": "Eye Rest",
-          "summary": "Schedules 20-20-20 eye breaks during a 90-minute play session.",
-          "description": "Eye Rest helps children take regular screen breaks. It announces a 30-second distance-viewing break after each 20-minute play period and ends after 90 minutes.",
+          "summary": "Schedules regular eye breaks during a 90-minute screen-use session.",
+          "description": "Eye Rest is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It schedules a 30-second distance-viewing break after each 20-minute work period and ends after 90 minutes.",
           "examplePhrases": [
             "Alexa, open Eye Rest",
             "Alexa, ask Eye Rest to start",
             "Alexa, ask Eye Rest to cancel my session"
           ],
-          "keywords": ["eye rest", "screen time", "20 20 20", "children", "timer"]
+          "keywords": ["eye rest", "screen break", "computer work", "productivity", "timer"]
         }
       },
       "isAvailableWorldwide": false,
@@ -34,7 +34,7 @@
     "privacyAndCompliance": {
       "allowsPurchases": false,
       "usesPersonalInfo": false,
-      "isChildDirected": true,
+      "isChildDirected": false,
       "isExportCompliant": true,
       "containsAds": false
     }

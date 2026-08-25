@@ -19,7 +19,7 @@ test('Google Home delays total exactly 90 minutes', () => {
   assert.equal(seconds, 90 * 60);
 });
 
-test('Google Home automation includes four breaks and final rest message', () => {
+test('Google Home automation includes four breaks and final longer-break message', () => {
   assert.equal((yaml.match(/Eye rest break\./g) || []).length, 4);
-  assert.match(yaml, /rest for the day/);
+  assert.match(yaml, /longer break/);
 });

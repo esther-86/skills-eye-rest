@@ -11,7 +11,7 @@ const SCHEDULE = Object.freeze([
   {
     offsetSeconds: 20 * 60 + 30,
     kind: 'resume',
-    text: 'Great job resting your eyes. Your play timer is resuming now.'
+    text: 'Your eye break is complete. Your screen-use timer is resuming now.'
   },
   {
     offsetSeconds: 40 * 60 + 30,
@@ -21,7 +21,7 @@ const SCHEDULE = Object.freeze([
   {
     offsetSeconds: 41 * 60,
     kind: 'resume',
-    text: 'Great job resting your eyes. Your play timer is resuming now.'
+    text: 'Your eye break is complete. Your screen-use timer is resuming now.'
   },
   {
     offsetSeconds: 61 * 60,
@@ -31,7 +31,7 @@ const SCHEDULE = Object.freeze([
   {
     offsetSeconds: 61 * 60 + 30,
     kind: 'resume',
-    text: 'Great job resting your eyes. Your play timer is resuming now.'
+    text: 'Your eye break is complete. Your screen-use timer is resuming now.'
   },
   {
     offsetSeconds: 81 * 60 + 30,
@@ -41,12 +41,12 @@ const SCHEDULE = Object.freeze([
   {
     offsetSeconds: 82 * 60,
     kind: 'resume',
-    text: 'Great job resting your eyes. Your play timer is resuming for the last eight minutes.'
+    text: 'Your eye break is complete. Your screen-use timer is resuming for the last eight minutes.'
   },
   {
     offsetSeconds: SESSION_MINUTES * 60,
     kind: 'complete',
-    text: 'Eye Rest is complete. You have reached your allotted playtime of 90 minutes. Please put the screen away and rest for the day.'
+    text: 'Eye Rest is complete. Your 90 minute screen-use session has ended. Consider taking a longer break before returning to the screen.'
   }
 ]);
 

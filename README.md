@@ -1,6 +1,6 @@
 # Eye Rest
 
-Eye Rest provides the same 90-minute, child-friendly 20-20-20 schedule on two voice platforms:
+Eye Rest is a general-audience productivity tool for adults who use screens. It provides the same 90-minute eye-break schedule on two voice platforms:
 
 - An Alexa custom skill that creates spoken reminders relative to the moment the skill starts.
 - A Google Home scripted household automation for Google Nest speakers and displays.
@@ -20,7 +20,7 @@ Google discontinued third-party Conversational Actions, so the Nest version is a
 | 61:30 | Resume |
 | 81:30 | Look away |
 | 82:00 | Resume for the last eight minutes |
-| 90:00 | Allotted playtime is over; rest for the day |
+| 90:00 | Screen-use session ends; consider a longer break |
 
 ## Lowest-cost Alexa deployment (recommended)
 
@@ -61,7 +61,7 @@ Use Google Home's built-in household script editor. There is no server, cloud pr
 
    ```yaml
       devices:
-        - Kids Speaker - Kids Room
+        - Office Speaker - Office
    ```
 
    Replace that value with the exact `Device name - Room name` shown in Google Home. Without `devices`, Google broadcasts throughout the home.

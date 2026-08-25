@@ -1,6 +1,6 @@
 metadata:
   name: Eye Rest — 90-minute screen session
-  description: Announces 30-second 20-20-20 eye breaks during a 90-minute play session.
+  description: Announces 30-second eye breaks during a 90-minute screen-use session.
 
 automations:
   starters:
@@ -10,7 +10,7 @@ automations:
 
   actions:
     - type: assistant.command.Broadcast
-      message: Eye Rest has started. Look 20 feet away when you hear each eye break. The full play session ends in 90 minutes.
+      message: Eye Rest has started. Look 20 feet away when you hear each eye break. The full screen-use session ends in 90 minutes.
 
     - type: time.delay
       for: 20min
@@ -19,7 +19,7 @@ automations:
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
-      message: Great job resting your eyes. Your play timer is resuming now.
+      message: Your eye break is complete. Your screen-use timer is resuming now.
 
     - type: time.delay
       for: 20min
@@ -28,7 +28,7 @@ automations:
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
-      message: Great job resting your eyes. Your play timer is resuming now.
+      message: Your eye break is complete. Your screen-use timer is resuming now.
 
     - type: time.delay
       for: 20min
@@ -37,7 +37,7 @@ automations:
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
-      message: Great job resting your eyes. Your play timer is resuming now.
+      message: Your eye break is complete. Your screen-use timer is resuming now.
 
     - type: time.delay
       for: 20min
@@ -46,9 +46,9 @@ automations:
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
-      message: Great job resting your eyes. Your play timer is resuming for the last eight minutes.
+      message: Your eye break is complete. Your screen-use timer is resuming for the last eight minutes.
 
     - type: time.delay
       for: 8min
     - type: assistant.command.Broadcast
-      message: Eye Rest is complete. You have reached your allotted playtime of 90 minutes. Please put the screen away and rest for the day.
+      message: Eye Rest is complete. Your 90-minute screen-use session has ended. Consider taking a longer break before returning to the screen.
