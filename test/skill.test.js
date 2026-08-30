@@ -20,7 +20,7 @@ function event(type, intent, permitted = true) {
 test('launch asks before starting', async () => {
   const result = await route(event('LaunchRequest'));
   assert.equal(result.response.shouldEndSession, false);
-  assert.match(result.response.outputSpeech.text, /Would you like me to set these reminders/i);
+  assert.equal(result.response.outputSpeech.text, 'Start a 90 minute eye break session?');
 });
 
 test('start creates relative schedule and confirms 90 minutes', async () => {
@@ -33,8 +33,14 @@ test('start creates relative schedule and confirms 90 minutes', async () => {
   assert.equal(canceled, true);
   assert.equal(input.schedule.length, 9);
   assert.equal(input.schedule[0].offsetSeconds, 1200);
-  assert.match(result.response.outputSpeech.text, /90 minutes/i);
-  assert.match(result.response.outputSpeech.text, /four eye break reminders/i);
+  assert.equal(result.response.outputSpeech.text, 'Eye Rest started. Your first break is in 20 minutes.');
+});
+
+test('what do you do gives the detailed help message', async () => {
+  const result = await route(event('IntentRequest', 'AboutEyeRestIntent'));
+  assert.equal(result.response.shouldEndSession, false);
+  assert.match(result.response.outputSpeech.text, /four 30 second eye breaks/i);
+  assert.match(result.response.outputSpeech.text, /replaces any earlier/i);
 });
 
 test('missing permission returns Alexa permissions card', async () => {

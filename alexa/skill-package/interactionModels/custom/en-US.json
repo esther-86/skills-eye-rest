@@ -23,6 +23,15 @@
             "delete my eye rest reminders"
           ]
         },
+        {
+          "name": "AboutEyeRestIntent",
+          "samples": [
+            "what do you do",
+            "how does this work",
+            "tell me what you do",
+            "what is eye rest"
+          ]
+        },
         { "name": "AMAZON.YesIntent", "samples": [] },
         { "name": "AMAZON.NoIntent", "samples": [] },
         { "name": "AMAZON.HelpIntent", "samples": [] },

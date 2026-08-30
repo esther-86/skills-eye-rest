@@ -63,7 +63,7 @@ async function start(event, deps) {
       apiAccessToken: system.apiAccessToken,
       schedule: SCHEDULE
     });
-    return response('Eye Rest has started. I set four eye break reminders, four resume reminders, and one session ending reminder over the next 90 minutes. Your first eye break is in 20 minutes.');
+    return response('Eye Rest started. Your first break is in 20 minutes.');
   } catch (error) {
     console.error('Unable to create Eye Rest reminders', error);
     if (error.statusCode === 401 || error.statusCode === 403) {
@@ -93,8 +93,8 @@ async function cancel(event, deps) {
 async function route(event, deps = reminders) {
   if (requestType(event) === 'LaunchRequest') {
     return response(
-      'Welcome to Eye Rest. I can use Alexa reminders to schedule four 30 second eye breaks during a 90 minute screen-use session. Starting now will replace any earlier Eye Rest session. Would you like me to set these reminders?',
-      { reprompt: 'Would you like to start Eye Rest?', endSession: false }
+      'Start a 90 minute eye break session?',
+      { reprompt: 'Would you like to start?', endSession: false }
     );
   }
 
@@ -110,8 +110,9 @@ async function route(event, deps = reminders) {
       case 'AMAZON.StopIntent':
         return cancel(event, deps);
       case 'AMAZON.HelpIntent':
+      case 'AboutEyeRestIntent':
         return response(
-          'Eye Rest schedules a 30 second eye break after each 20 minute screen-use period, for up to 90 minutes. Say start eye rest to begin, or cancel eye rest to stop.',
+          'Eye Rest uses Alexa reminders to schedule four 30 second eye breaks, four resume notices, and a final notice over 90 minutes. Starting a session replaces any earlier Eye Rest session. Say start eye rest to begin, or cancel eye rest to stop.',
           { reprompt: 'Say start eye rest to begin.', endSession: false }
         );
       case 'AMAZON.FallbackIntent':
