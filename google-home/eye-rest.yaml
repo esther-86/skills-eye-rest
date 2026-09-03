@@ -1,16 +1,16 @@
 metadata:
-  name: Eye Rest — 90-minute screen session
-  description: Announces 30-second eye breaks during a 90-minute screen-use session.
+  name: Vision Pause — five focus periods
+  description: Announces 30-second eye breaks between five 20-minute focus periods.
 
 automations:
   starters:
     - type: assistant.event.OkGoogle
       eventData: query
-      is: start eye rest
+      is: start vision pause
 
   actions:
     - type: assistant.command.Broadcast
-      message: Eye Rest has started. Look 20 feet away when you hear each eye break. The full screen-use session ends in 90 minutes.
+      message: Vision Pause has started. Look 20 feet away when you hear each eye break. Five focus periods end in 102 minutes.
 
     - type: time.delay
       for: 20min
@@ -46,9 +46,9 @@ automations:
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
-      message: Your eye break is complete. Your screen-use timer is resuming for the last eight minutes.
+      message: Your eye break is complete. Your fifth 20-minute focus period is starting now.
 
     - type: time.delay
-      for: 8min
+      for: 20min
     - type: assistant.command.Broadcast
-      message: Eye Rest is complete. Your 90-minute screen-use session has ended. Consider taking a longer break before returning to the screen.
+      message: Vision Pause is complete. Your five focus periods have ended. Consider taking a longer break before returning to the screen.

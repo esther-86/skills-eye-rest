@@ -4,22 +4,22 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "name": "Eye Rest",
-          "summary": "Schedules regular eye breaks during a 90-minute screen-use session.",
-          "description": "Eye Rest is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It creates Alexa reminders for four 30-second distance-viewing breaks, four resume notices, and a final notice over a 90-minute session. Reminders permission is required. Starting a new session replaces any earlier Eye Rest session.",
+          "name": "Vision Pause",
+          "summary": "Schedules one to five 20-minute focus periods with regular eye breaks.",
+          "description": "Vision Pause is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It schedules one to five complete 20-minute focus periods, with a 30-second distance-viewing break between periods. Five periods is the default and lasts 102 minutes. Reminders permission is required. Starting a new session replaces any earlier Vision Pause session.",
           "smallIconUri": "file://assets/images/en-US_smallIcon.png",
           "largeIconUri": "file://assets/images/en-US_largeIcon.png",
           "examplePhrases": [
-            "Alexa, open Eye Rest",
-            "Alexa, ask Eye Rest to start",
-            "Alexa, ask Eye Rest to cancel my session"
+            "Alexa, open Vision Pause",
+            "Alexa, ask Vision Pause to start",
+            "Alexa, ask Vision Pause to cancel my session"
           ],
-          "keywords": ["eye rest", "screen break", "computer work", "productivity", "timer"]
+          "keywords": ["vision pause", "eye break", "screen break", "computer work", "productivity"]
         }
       },
       "isAvailableWorldwide": false,
       "distributionMode": "PUBLIC",
-      "testingInstructions": "Enable Reminders permission for the skill. Say, 'Alexa, open Eye Rest.' Alexa explains that it will set four 30-second eye-break reminders during a 90-minute session and asks for confirmation. Answer 'yes.' Confirm that nine relative reminders are created: breaks at 20:00, 40:30, 61:00, and 81:30; resume notices 30 seconds after each break; and completion at 90:00. Start it again and confirm the earlier nine reminders are replaced rather than duplicated. Say, 'Alexa, ask Eye Rest to cancel my session,' and confirm all Eye Rest reminders are removed.",
+      "testingInstructions": "Enable Reminders permission for the skill. Say, 'Alexa, open Vision Pause.' Alexa asks whether to start five 20-minute focus periods. Answer 'yes.' Confirm that nine relative reminders are created: breaks at 20:00, 40:30, 61:00, and 81:30; resume notices 30 seconds after each break; and completion at 102:00. Open the skill again, answer 'no,' and choose a number from one to five. Confirm the reminder count matches the selection. Start it again and confirm earlier reminders are replaced rather than duplicated. Say, 'Alexa, ask Vision Pause to cancel my session,' and confirm all Vision Pause reminders are removed.",
       "category": "HEALTH_AND_FITNESS",
       "distributionCountries": ["US"]
     },

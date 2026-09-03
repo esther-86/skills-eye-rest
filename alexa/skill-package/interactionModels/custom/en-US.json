@@ -1,35 +1,51 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "eye rest",
+      "invocationName": "vision pause",
       "intents": [
         {
-          "name": "StartEyeRestIntent",
+          "name": "StartVisionPauseIntent",
           "samples": [
             "start",
-            "start eye rest",
+            "start vision pause",
             "begin",
             "begin a session",
             "start my screen break timer",
-            "start the eye rest timer"
+            "start the vision pause timer"
           ]
         },
         {
-          "name": "CancelEyeRestIntent",
+          "name": "CancelVisionPauseIntent",
           "samples": [
-            "cancel eye rest",
+            "cancel vision pause",
             "cancel my session",
-            "stop my eye rest session",
-            "delete my eye rest reminders"
+            "stop my vision pause session",
+            "delete my vision pause reminders"
           ]
         },
         {
-          "name": "AboutEyeRestIntent",
+          "name": "NumberOfPeriodsIntent",
+          "slots": [
+            {
+              "name": "focusPeriods",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "{focusPeriods}",
+            "{focusPeriods} periods",
+            "start {focusPeriods} periods",
+            "make it {focusPeriods}",
+            "I want {focusPeriods} focus periods"
+          ]
+        },
+        {
+          "name": "AboutVisionPauseIntent",
           "samples": [
             "what do you do",
             "how does this work",
             "tell me what you do",
-            "what is eye rest"
+            "what is vision pause"
           ]
         },
         { "name": "AMAZON.YesIntent", "samples": [] },

@@ -4,9 +4,9 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { route, REMINDERS_PERMISSION } = require('../alexa/lambda/index');
 
-function event(type, intent, permitted = true) {
+function event(type, intent, permitted = true, slots) {
   return {
-    request: { type, intent: intent ? { name: intent } : undefined },
+    request: { type, intent: intent ? { name: intent, slots } : undefined },
     context: {
       System: {
         apiEndpoint: 'https://api.amazonalexa.com',
@@ -20,37 +20,65 @@ function event(type, intent, permitted = true) {
 test('launch asks before starting', async () => {
   const result = await route(event('LaunchRequest'));
   assert.equal(result.response.shouldEndSession, false);
-  assert.equal(result.response.outputSpeech.text, 'Start a 90 minute eye break session?');
+  assert.equal(result.response.outputSpeech.text, 'Start five 20-minute focus periods?');
 });
 
-test('start creates relative schedule and confirms 90 minutes', async () => {
+test('start creates the default five-period relative schedule', async () => {
   let input;
   let canceled = false;
-  const result = await route(event('IntentRequest', 'StartEyeRestIntent'), {
+  const result = await route(event('IntentRequest', 'StartVisionPauseIntent'), {
     createSchedule: async value => { input = value; },
     cancelSchedule: async () => { canceled = true; return 0; }
   });
   assert.equal(canceled, true);
   assert.equal(input.schedule.length, 9);
   assert.equal(input.schedule[0].offsetSeconds, 1200);
-  assert.equal(result.response.outputSpeech.text, 'Eye Rest started. Your first break is in 20 minutes.');
+  assert.equal(input.schedule.at(-1).offsetSeconds, 6120);
+  assert.equal(result.response.outputSpeech.text, 'Vision Pause started for 5 20-minute focus periods. Your first eye break is in 20 minutes.');
+});
+
+test('no asks how many periods from one to five', async () => {
+  const result = await route(event('IntentRequest', 'AMAZON.NoIntent'));
+  assert.equal(result.response.shouldEndSession, false);
+  assert.match(result.response.outputSpeech.text, /from one to five/i);
+});
+
+test('chosen period count creates a matching schedule', async () => {
+  let input;
+  const result = await route(event('IntentRequest', 'NumberOfPeriodsIntent', true, {
+    focusPeriods: { name: 'focusPeriods', value: '3' }
+  }), {
+    createSchedule: async value => { input = value; },
+    cancelSchedule: async () => 0
+  });
+  assert.equal(input.schedule.length, 5);
+  assert.equal(input.schedule.at(-1).offsetSeconds, 3660);
+  assert.match(result.response.outputSpeech.text, /3 20-minute focus periods/i);
+});
+
+test('period counts outside one to five are rejected conversationally', async () => {
+  const result = await route(event('IntentRequest', 'NumberOfPeriodsIntent', true, {
+    focusPeriods: { name: 'focusPeriods', value: '6' }
+  }));
+  assert.equal(result.response.shouldEndSession, false);
+  assert.match(result.response.outputSpeech.text, /between one and five/i);
 });
 
 test('what do you do gives the detailed help message', async () => {
-  const result = await route(event('IntentRequest', 'AboutEyeRestIntent'));
+  const result = await route(event('IntentRequest', 'AboutVisionPauseIntent'));
   assert.equal(result.response.shouldEndSession, false);
-  assert.match(result.response.outputSpeech.text, /four 30 second eye breaks/i);
-  assert.match(result.response.outputSpeech.text, /replaces any earlier/i);
+  assert.match(result.response.outputSpeech.text, /one to five 20-minute focus periods/i);
+  assert.match(result.response.outputSpeech.text, /five periods is the default/i);
 });
 
 test('missing permission returns Alexa permissions card', async () => {
-  const result = await route(event('IntentRequest', 'StartEyeRestIntent', false));
+  const result = await route(event('IntentRequest', 'StartVisionPauseIntent', false));
   assert.equal(result.response.card.type, 'AskForPermissionsConsent');
   assert.deepEqual(result.response.card.permissions, [REMINDERS_PERMISSION]);
 });
 
 test('cancel reports canceled schedule', async () => {
-  const result = await route(event('IntentRequest', 'CancelEyeRestIntent'), {
+  const result = await route(event('IntentRequest', 'CancelVisionPauseIntent'), {
     createSchedule: async () => {},
     cancelSchedule: async () => 9
   });
