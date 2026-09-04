@@ -33,7 +33,7 @@ function buildSchedule(periods = DEFAULT_PERIODS) {
   schedule.push({
     offsetSeconds: sessionSeconds(periods),
     kind: 'complete',
-    text: `Vision Pause is complete. Your ${periods} focus ${periods === 1 ? 'period has' : 'periods have'} ended. Consider taking a longer break before returning to the screen.`
+    text: `Vision Stop is complete. Your ${periods} focus ${periods === 1 ? 'period has' : 'periods have'} ended. Consider taking a longer break before returning to the screen.`
   });
   return Object.freeze(schedule);
 }

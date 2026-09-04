@@ -26,7 +26,7 @@ test('launch asks before starting', async () => {
 test('start creates the default five-period relative schedule', async () => {
   let input;
   let canceled = false;
-  const result = await route(event('IntentRequest', 'StartVisionPauseIntent'), {
+  const result = await route(event('IntentRequest', 'StartVisionStopIntent'), {
     createSchedule: async value => { input = value; },
     cancelSchedule: async () => { canceled = true; return 0; }
   });
@@ -34,7 +34,7 @@ test('start creates the default five-period relative schedule', async () => {
   assert.equal(input.schedule.length, 9);
   assert.equal(input.schedule[0].offsetSeconds, 1200);
   assert.equal(input.schedule.at(-1).offsetSeconds, 6120);
-  assert.equal(result.response.outputSpeech.text, 'Vision Pause started for 5 20-minute focus periods. Your first eye break is in 20 minutes.');
+  assert.equal(result.response.outputSpeech.text, 'Your first eye break is in 20 minutes.');
 });
 
 test('no asks how many periods from one to five', async () => {
@@ -53,7 +53,7 @@ test('chosen period count creates a matching schedule', async () => {
   });
   assert.equal(input.schedule.length, 5);
   assert.equal(input.schedule.at(-1).offsetSeconds, 3660);
-  assert.match(result.response.outputSpeech.text, /3 20-minute focus periods/i);
+  assert.equal(result.response.outputSpeech.text, 'Your first eye break is in 20 minutes.');
 });
 
 test('period counts outside one to five are rejected conversationally', async () => {
@@ -65,20 +65,20 @@ test('period counts outside one to five are rejected conversationally', async ()
 });
 
 test('what do you do gives the detailed help message', async () => {
-  const result = await route(event('IntentRequest', 'AboutVisionPauseIntent'));
+  const result = await route(event('IntentRequest', 'AboutVisionStopIntent'));
   assert.equal(result.response.shouldEndSession, false);
   assert.match(result.response.outputSpeech.text, /one to five 20-minute focus periods/i);
   assert.match(result.response.outputSpeech.text, /five periods is the default/i);
 });
 
 test('missing permission returns Alexa permissions card', async () => {
-  const result = await route(event('IntentRequest', 'StartVisionPauseIntent', false));
+  const result = await route(event('IntentRequest', 'StartVisionStopIntent', false));
   assert.equal(result.response.card.type, 'AskForPermissionsConsent');
   assert.deepEqual(result.response.card.permissions, [REMINDERS_PERMISSION]);
 });
 
 test('cancel reports canceled schedule', async () => {
-  const result = await route(event('IntentRequest', 'CancelVisionPauseIntent'), {
+  const result = await route(event('IntentRequest', 'CancelVisionStopIntent'), {
     createSchedule: async () => {},
     cancelSchedule: async () => 9
   });

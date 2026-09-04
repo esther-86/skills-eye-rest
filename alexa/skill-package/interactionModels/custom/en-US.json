@@ -1,26 +1,26 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "vision pause",
+      "invocationName": "vision stop",
       "intents": [
         {
-          "name": "StartVisionPauseIntent",
+          "name": "StartVisionStopIntent",
           "samples": [
             "start",
-            "start vision pause",
+            "start vision stop",
             "begin",
             "begin a session",
             "start my screen break timer",
-            "start the vision pause timer"
+            "start the vision stop timer"
           ]
         },
         {
-          "name": "CancelVisionPauseIntent",
+          "name": "CancelVisionStopIntent",
           "samples": [
-            "cancel vision pause",
+            "cancel vision stop",
             "cancel my session",
-            "stop my vision pause session",
-            "delete my vision pause reminders"
+            "stop my vision stop session",
+            "delete my vision stop reminders"
           ]
         },
         {
@@ -40,12 +40,12 @@
           ]
         },
         {
-          "name": "AboutVisionPauseIntent",
+          "name": "AboutVisionStopIntent",
           "samples": [
             "what do you do",
             "how does this work",
             "tell me what you do",
-            "what is vision pause"
+            "what is vision stop"
           ]
         },
         { "name": "AMAZON.YesIntent", "samples": [] },

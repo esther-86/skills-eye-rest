@@ -1,0 +1,83 @@
+1. Start the default five-period session
+User: Alexa, open Vision Stop.
+Alexa: Start five 20-minute focus periods?
+User: Yes.
+Alexa: Your first eye break is in 20 minutes.
+Alexa then announces:
+- 20:00: Eye break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
+- 20:30: Your eye break is complete. Your focus period is resuming now.
+- 40:30: Eye-break announcement.
+- 41:00: Focus resumes.
+- 61:00: Eye-break announcement.
+- 61:30: Focus resumes.
+- 81:30: Eye-break announcement.
+- 82:00: Focus resumes.
+- 102:00: Vision Stop is complete. Your 5 focus periods have ended. Consider taking a longer break before returning to the screen.
+2. Choose the number of periods
+User: Alexa, open Vision Stop.
+Alexa: Start five 20-minute focus periods?
+User: No.
+Alexa: How many 20-minute focus periods would you like, from one to five?
+User: Three.
+Alexa: Your first eye break is in 20 minutes.
+The three-period session ends after 61 minutes.
+3. Start one period
+User: Alexa, open Vision Stop.
+Alexa: Start five 20-minute focus periods?
+User: No.
+Alexa: How many 20-minute focus periods would you like, from one to five?
+User: One.
+Alexa: Vision Stop started for one 20-minute focus period.
+After 20 minutes:
+Alexa: Vision Stop is complete. Your 1 focus period has ended. Consider taking a longer break before returning to the screen.
+A one-period session has no eye-break reminder.
+4. Start directly
+User: Alexa, ask Vision Stop to start.
+Alexa: Your first eye break is in 20 minutes.
+Other supported phrases include:
+- “Alexa, ask Vision Stop to begin.”
+- “Alexa, ask Vision Stop to begin a session.”
+- “Alexa, ask Vision Stop to start my screen break timer.”
+- “Alexa, tell Vision Stop to start three periods.”
+Starting another session replaces the existing Vision Stop session.
+5. Request help
+User: Alexa, ask Vision Stop how this works.
+Alexa: Vision Stop schedules one to five 20-minute focus periods, with a 30 second eye break between periods. Five periods is the default. Say start Vision Stop to use the default, or say a number from one to five.
+If the user is silent:
+Alexa: Say start Vision Stop, or choose a number from one to five.
+6. Enter an invalid number
+User: Alexa, tell Vision Stop to start six periods.
+Alexa: Please choose between one and five 20-minute focus periods.
+If the user is silent:
+Alexa: How many focus periods would you like, from one to five?
+User: Four.
+Alexa: Your first eye break is in 20 minutes.
+7. Cancel an active session
+User: Alexa, ask Vision Stop to cancel my session.
+Alexa: Your Vision Stop session has been canceled.
+All reminders belonging to the session are removed.
+8. Cancel when nothing is active
+User: Alexa, ask Vision Stop to cancel my session.
+Alexa: There is no active Vision Stop session to cancel.
+9. Reminders permission is missing
+User: Alexa, open Vision Stop.
+Alexa: Start five 20-minute focus periods?
+User: Yes.
+Alexa: Vision Stop needs permission to announce eye breaks during your screen-use session. Please enable Reminders permission in the Alexa app, then open Vision Stop again.
+Alexa also displays a permission-consent card in the Alexa app.
+10. Alexa does not understand
+User: Alexa, ask Vision Stop to make coffee.
+Alexa: I did not understand that. Say start Vision Stop, cancel Vision Stop, or help.
+If the user is silent:
+Alexa: What would you like to do?
+11. Temporary service failure
+If the session cannot start:
+Alexa: I could not start the Vision Stop schedule right now. Please try again in a moment.
+If cancellation fails:
+Alexa: I could not cancel the Vision Stop reminders. Please try again.
+12. Google Home
+Google Home runs a fixed five-period automation.
+User: Hey Google, start Vision Stop.
+Google: Vision Stop has started. Look 20 feet away when you hear each eye break. Five focus periods end in 102 minutes.
+Google announces four 30-second breaks during the session. At 102 minutes:
+Google: Vision Stop is complete. Your five focus periods have ended. Consider taking a longer break before returning to the screen.

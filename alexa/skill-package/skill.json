@@ -4,22 +4,22 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "name": "Vision Pause",
+          "name": "Vision Stop",
           "summary": "Schedules one to five 20-minute focus periods with regular eye breaks.",
-          "description": "Vision Pause is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It schedules one to five complete 20-minute focus periods, with a 30-second distance-viewing break between periods. Five periods is the default and lasts 102 minutes. Reminders permission is required. Starting a new session replaces any earlier Vision Pause session.",
+          "description": "Vision Stop is a general-audience productivity tool for adults who spend extended time using a computer or other screen. It schedules one to five complete 20-minute focus periods, with a 30-second distance-viewing break between periods. Five periods is the default and lasts 102 minutes. Reminders permission is required. Starting a new session replaces any earlier Vision Stop session.",
           "smallIconUri": "file://assets/images/en-US_smallIcon.png",
           "largeIconUri": "file://assets/images/en-US_largeIcon.png",
           "examplePhrases": [
-            "Alexa, open Vision Pause",
-            "Alexa, ask Vision Pause to start",
-            "Alexa, ask Vision Pause to cancel my session"
+            "Alexa, open Vision Stop",
+            "Alexa, ask Vision Stop to start",
+            "Alexa, ask Vision Stop to cancel my session"
           ],
-          "keywords": ["vision pause", "eye break", "screen break", "computer work", "productivity"]
+          "keywords": ["vision stop", "eye break", "screen break", "computer work", "productivity"]
         }
       },
       "isAvailableWorldwide": false,
       "distributionMode": "PUBLIC",
-      "testingInstructions": "Enable Reminders permission for the skill. Say, 'Alexa, open Vision Pause.' Alexa asks whether to start five 20-minute focus periods. Answer 'yes.' Confirm that nine relative reminders are created: breaks at 20:00, 40:30, 61:00, and 81:30; resume notices 30 seconds after each break; and completion at 102:00. Open the skill again, answer 'no,' and choose a number from one to five. Confirm the reminder count matches the selection. Start it again and confirm earlier reminders are replaced rather than duplicated. Say, 'Alexa, ask Vision Pause to cancel my session,' and confirm all Vision Pause reminders are removed.",
+      "testingInstructions": "Enable Reminders permission for the skill. Say, 'Alexa, open Vision Stop.' Alexa asks whether to start five 20-minute focus periods. Answer 'yes.' Confirm that nine relative reminders are created: breaks at 20:00, 40:30, 61:00, and 81:30; resume notices 30 seconds after each break; and completion at 102:00. Open the skill again, answer 'no,' and choose a number from one to five. Confirm the reminder count matches the selection. Start it again and confirm earlier reminders are replaced rather than duplicated. Say, 'Alexa, ask Vision Stop to cancel my session,' and confirm all Vision Stop reminders are removed.",
       "category": "HEALTH_AND_FITNESS",
       "distributionCountries": ["US"]
     },

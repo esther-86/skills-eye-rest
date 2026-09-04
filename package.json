@@ -1,5 +1,5 @@
 {
-  "name": "vision-pause",
+  "name": "vision-stop",
   "version": "1.0.0",
   "private": true,
   "description": "Alexa skill and Google Home automation for 20-20-20 eye breaks.",

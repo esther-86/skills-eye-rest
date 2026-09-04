@@ -1,16 +1,16 @@
 metadata:
-  name: Vision Pause — five focus periods
+  name: Vision Stop — five focus periods
   description: Announces 30-second eye breaks between five 20-minute focus periods.
 
 automations:
   starters:
     - type: assistant.event.OkGoogle
       eventData: query
-      is: start vision pause
+      is: start vision stop
 
   actions:
     - type: assistant.command.Broadcast
-      message: Vision Pause has started. Look 20 feet away when you hear each eye break. Five focus periods end in 102 minutes.
+      message: Vision Stop has started. Look 20 feet away when you hear each eye break. Five focus periods end in 102 minutes.
 
     - type: time.delay
       for: 20min
@@ -51,4 +51,4 @@ automations:
     - type: time.delay
       for: 20min
     - type: assistant.command.Broadcast
-      message: Vision Pause is complete. Your five focus periods have ended. Consider taking a longer break before returning to the screen.
+      message: Vision Stop is complete. Your five focus periods have ended. Consider taking a longer break before returning to the screen.
