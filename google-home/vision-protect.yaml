@@ -1,21 +1,21 @@
 metadata:
-  name: Vision Stop — five focus periods
+  name: Vision Protect — five focus periods
   description: Announces 30-second eye breaks between five 20-minute focus periods.
 
 automations:
   starters:
     - type: assistant.event.OkGoogle
       eventData: query
-      is: start vision stop
+      is: start vision protect
 
   actions:
     - type: assistant.command.Broadcast
-      message: Vision Stop has started. Look 20 feet away when you hear each eye break. Five focus periods end in 102 minutes.
+      message: Vision Protect has started. Look 20 feet away when you hear each eye break. Five focus periods end in 102 minutes.
 
     - type: time.delay
       for: 20min
     - type: assistant.command.Broadcast
-      message: Eye rest break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
+      message: Eye break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
@@ -24,7 +24,7 @@ automations:
     - type: time.delay
       for: 20min
     - type: assistant.command.Broadcast
-      message: Eye rest break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
+      message: Eye break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
@@ -33,7 +33,7 @@ automations:
     - type: time.delay
       for: 20min
     - type: assistant.command.Broadcast
-      message: Eye rest break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
+      message: Eye break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
@@ -42,7 +42,7 @@ automations:
     - type: time.delay
       for: 20min
     - type: assistant.command.Broadcast
-      message: Eye rest break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
+      message: Eye break. Look away from the screen at something at least 20 feet away. Keep looking away for 30 seconds.
     - type: time.delay
       for: 30sec
     - type: assistant.command.Broadcast
@@ -51,4 +51,4 @@ automations:
     - type: time.delay
       for: 20min
     - type: assistant.command.Broadcast
-      message: Vision Stop is complete. Your five focus periods have ended. Consider taking a longer break before returning to the screen.
+      message: Vision Protect is complete. Your five focus periods have ended. Consider taking a longer break before returning to the screen.

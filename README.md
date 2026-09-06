@@ -1,6 +1,6 @@
-# Vision Stop
+# Vision Protect
 
-Vision Stop is a general-audience productivity tool for adults who use screens. It provides complete 20-minute focus periods separated by 30-second eye breaks on two voice platforms:
+Vision Protect is a general-audience productivity tool for adults who use screens. It provides complete 20-minute focus periods separated by 30-second eye breaks on two voice platforms:
 
 - An Alexa custom skill that creates spoken reminders relative to the moment the skill starts.
 - A Google Home scripted household automation for Google Nest speakers and displays.
@@ -22,7 +22,7 @@ Google discontinued third-party Conversational Actions, so the Nest version is a
 | 82:00 | Resume for the fifth 20-minute focus period |
 | 102:00 | Screen-use session ends; consider a longer break |
 
-On Alexa, opening Vision Stop offers five focus periods by default. Answer “no” to choose from one to five periods. The total durations are 20, 40.5, 61, 81.5, or 102 minutes. Google Home uses the default five-period schedule.
+On Alexa, opening Vision Protect offers five focus periods by default. Answer “no” to choose from one to five periods. The total durations are 20, 40.5, 61, 81.5, or 102 minutes. Google Home uses the default five-period schedule.
 
 ## Lowest-cost Alexa deployment (recommended)
 
@@ -31,27 +31,34 @@ Use **Alexa-hosted Node.js**. It does not require a separate AWS account, Lambda
 Prerequisite: a free [Amazon Developer account](https://developer.amazon.com/). Node.js is needed on your computer only to run the local tests.
 
 1. Open the [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask) and select **Create Skill**.
-2. Name it **Vision Stop**, choose **English (US)**, and continue.
+2. Name it **Vision Protect**, choose **English (US)**, and continue.
 3. Choose **Other** for the experience and **Custom** for the model.
 4. Under **Hosting services**, choose **Alexa-hosted (Node.js)**. Select the hosting region closest to you.
 5. Choose **Start from Scratch**, review the selections, and create the skill. Amazon provisions the hosted endpoint automatically; do not create an AWS Lambda function.
+
 Get-Content -Raw .\alexa\skill-package\interactionModels\custom\en-US.json | Set-Clipboard
+
+In Developer Console → Build → Permissions, enable Reminders.
+In the Alexa app, open Skills & Games → Your Skills → Dev → Vision Protect → Settings → Manage Permissions and allow reminders.
+Say “Alexa, open Vision Protect”, then “yes.”
+
+
 6. On **Build > Interaction Model > JSON Editor**, replace the editor contents with `alexa/skill-package/interactionModels/custom/en-US.json`. Save and select **Build Skill**.
 7. On the **Code** tab:
    - Replace `lambda/index.js` with `alexa/lambda/index.js` from this project.
    - Create `lambda/schedule.js` and paste in `alexa/lambda/schedule.js`.
    - Create `lambda/reminders.js` and paste in `alexa/lambda/reminders.js`.
-   - The generated `lambda/package.json` may be left in place. Vision Stop uses only Node.js built-ins and does not require another package.
+   - The generated `lambda/package.json` may be left in place. Vision Protect uses only Node.js built-ins and does not require another package.
    - Select **Save**, then **Deploy**.
-8. Under **Build > Permissions**, enable **Reminders**. The account using the Echo must also grant Vision Stop permission in the Alexa app.
-9. On the **Test** tab, change testing to **Development**, enter `open vision stop`, and confirm that Alexa offers five 20-minute focus periods.
-10. On an Echo signed in to the same Amazon account, say: “Alexa, open Vision Stop.” Grant Reminders permission in the Alexa app when prompted.
+8. Under **Build > Permissions**, enable **Reminders**. The account using the Echo must also grant Vision Protect permission in the Alexa app.
+9. On the **Test** tab, change testing to **Development**, enter `open vision protect`, and confirm that Alexa offers five 20-minute focus periods.
+10. On an Echo signed in to the same Amazon account, say: “Alexa, open Vision Protect.” Grant Reminders permission in the Alexa app when prompted.
 
 The files under `alexa/skill-package` are also suitable for an advanced ASK CLI or self-hosted deployment, but neither is needed for the lowest-cost setup.
 
-Alexa requires both account permission and spoken confirmation before a skill creates reminders. Vision Stop asks “Start five 20-minute focus periods?” Answer “yes” for five, or answer “no” and choose a number from one to five.
+Alexa requires both account permission and spoken confirmation before a skill creates reminders. Vision Protect asks “Start five 20-minute focus periods?” Answer “yes” for five, or answer “no” and choose a number from one to five.
 
-Starting a new session removes any earlier Vision Stop reminders before creating the new schedule, which prevents overlapping sessions. To cancel, say: “Alexa, ask Vision Stop to cancel my session.” The Alexa Reminders API exposes only reminders created by this skill, and Vision Stop removes all of them when canceling.
+Starting a new session removes any earlier active Vision Protect reminders before creating the new schedule, which prevents overlapping sessions. To cancel, say: “Alexa, ask Vision Protect to cancel my session.” The Alexa Reminders API exposes only reminders created by this skill, and Vision Protect removes active ones when canceling. Completed history is skipped because Alexa does not allow deleting completed reminders. A reminder that disappears during cleanup does not block a restart; permission and service errors still do.
 
 ## Lowest-cost Google Nest setup (recommended)
 
@@ -59,7 +66,7 @@ Use Google Home's built-in household script editor. There is no server, cloud pr
 
 1. Open the Google Home app and join **Public Preview** if the script editor is not available. You can also use [Google Home for web](https://home.google.com/automations); this is the recommended creation route on iPhone or iPad.
 2. Go to **Automations > Add > Household > More options > Script editor**. The editor is also available at [home.google.com](https://home.google.com/automations).
-3. Paste `google-home/vision-stop.yaml` into the editor.
+3. Paste `google-home/vision-protect.yaml` into the editor.
 4. Optionally restrict each broadcast to one speaker. Under every `assistant.command.Broadcast`, add:
 
    ```yaml
@@ -69,7 +76,7 @@ Use Google Home's built-in household script editor. There is no server, cloud pr
 
    Replace that value with the exact `Device name - Room name` shown in Google Home. Without `devices`, Google broadcasts throughout the home.
 5. Select **Validate**, fix any device-name suggestions if applicable, save, and activate the automation.
-6. Say: “Hey Google, start vision stop.”
+6. Say: “Hey Google, start vision protect.”
 
 The Google automation must remain active and depends on the Nest speaker, internet connection, and Google Home automation service. Google Home does not currently offer a third-party conversational skill equivalent to Alexa custom skills.
 
@@ -94,6 +101,32 @@ The tests verify all relative offsets, selectable period counts, 30-second break
 
 ## Important operational notes
 
-- Starting the Alexa skill again replaces the current Vision Stop session.
+- Starting the Alexa skill again replaces the current Vision Protect session.
 - Starting the Google automation more than once may start overlapping automation runs. Stop the active automation in Google Home before restarting.
 - Voice reminders and household automations rely on cloud services and should not be treated as safety-critical timers.
+
+
+## Updating existing installations to Vision Protect
+
+Update the Alexa skill display name to **Vision Protect**, import the updated
+`alexa/skill-package/interactionModels/custom/en-US.json`, and build the model.
+Replace the hosted Lambda source files with the files in `alexa/lambda`, then
+Save and Deploy. The model and code must both be updated because the custom
+intent names changed. Test with “Alexa, open Vision Protect.”
+
+For Google Home, replace the existing automation with
+`google-home/vision-protect.yaml`, validate and save it, then say
+“Hey Google, start vision protect.”
+
+## Restart fix for existing Alexa-hosted installations
+
+Replace `lambda/reminders.js` in the Alexa Developer Console Code tab with
+the updated `alexa/lambda/reminders.js`, then Save and Deploy. No interaction
+model change is needed for the restart fix alone; the rename above requires both
+model and code updates. This fixes a restart failure caused by attempting to
+delete completed reminders before creating a new session; it does not mark
+overdue reminders completed or automatically clear reminder history.
+
+After deployment, test a restart with completed reminders still present. If
+Alexa fails immediately on opening the skill (before asking about five periods),
+check the hosted endpoint logs: launching does not call the Reminders API.

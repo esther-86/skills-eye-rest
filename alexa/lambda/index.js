@@ -30,9 +30,16 @@ function systemContext(event) {
   return event.context?.System || {};
 }
 
-function hasReminderPermission(event) {
-  const status = systemContext(event).user?.permissions?.consentToken;
-  return Boolean(status);
+function hasReminderApiToken(event) {
+  // Token presence is not consent; the Reminders API enforces permission.
+  return Boolean(systemContext(event).apiAccessToken);
+}
+
+function permissionResponse() {
+  return response(
+    'Vision Protect cannot access your reminders. In the Alexa app, open Vision Protect, choose Settings, enable Reminders, and tap Save Permissions. Then open Vision Protect again.',
+    { card: permissionCard() }
+  );
 }
 
 function requestType(event) {
@@ -57,16 +64,13 @@ async function start(event, deps, periods = DEFAULT_PERIODS) {
       { reprompt: 'How many focus periods would you like, from one to five?', endSession: false }
     );
   }
-  if (!hasReminderPermission(event)) {
-    return response(
-      'Vision Stop needs permission to announce eye breaks during your screen-use session. Please enable Reminders permission in the Alexa app, then open Vision Stop again.',
-      { card: permissionCard() }
-    );
+  if (!hasReminderApiToken(event)) {
+    return permissionResponse();
   }
 
   const system = systemContext(event);
   try {
-    // Replace any earlier Vision Stop reminders so sessions never overlap.
+    // Replace any earlier Vision Protect reminders so sessions never overlap.
     await deps.cancelSchedule({
       apiEndpoint: system.apiEndpoint,
       apiAccessToken: system.apiAccessToken
@@ -77,21 +81,21 @@ async function start(event, deps, periods = DEFAULT_PERIODS) {
       schedule: buildSchedule(periods)
     });
     if (periods === 1) {
-      return response('Vision Stop started for one 20-minute focus period.');
+      return response('Vision Protect started for one 20-minute focus period.');
     }
     return response('Your first eye break is in 20 minutes.');
   } catch (error) {
-    console.error('Unable to create Vision Stop reminders', error);
+    console.error('Unable to create Vision Protect reminders', error);
     if (error.statusCode === 401 || error.statusCode === 403) {
-      return response('I could not access reminders. Please enable Reminders permission for Vision Stop in the Alexa app and try again.', { card: permissionCard() });
+      return permissionResponse();
     }
-    return response('I could not start the Vision Stop schedule right now. Please try again in a moment.');
+    return response('I could not start the Vision Protect schedule right now. Please try again in a moment.');
   }
 }
 
 async function cancel(event, deps) {
-  if (!hasReminderPermission(event)) {
-    return response('There is no Vision Stop session I can cancel.');
+  if (!hasReminderApiToken(event)) {
+    return permissionResponse();
   }
   const system = systemContext(event);
   try {
@@ -99,10 +103,11 @@ async function cancel(event, deps) {
       apiEndpoint: system.apiEndpoint,
       apiAccessToken: system.apiAccessToken
     });
-    return response(count ? 'Your Vision Stop session has been canceled.' : 'There is no active Vision Stop session to cancel.');
+    return response(count ? 'Your Vision Protect session has been canceled.' : 'There is no active Vision Protect session to cancel.');
   } catch (error) {
-    console.error('Unable to cancel Vision Stop reminders', error);
-    return response('I could not cancel the Vision Stop reminders. Please try again.');
+    console.error('Unable to cancel Vision Protect reminders', error);
+    if (error.statusCode === 401 || error.statusCode === 403) return permissionResponse();
+    return response('I could not cancel the Vision Protect reminders. Please try again.');
   }
 }
 
@@ -117,7 +122,7 @@ async function route(event, deps = reminders) {
   if (requestType(event) === 'IntentRequest') {
     switch (intentName(event)) {
       case 'AMAZON.YesIntent':
-      case 'StartVisionStopIntent':
+      case 'StartVisionProtectIntent':
         return start(event, deps);
       case 'AMAZON.NoIntent':
         return response(
@@ -126,20 +131,20 @@ async function route(event, deps = reminders) {
         );
       case 'NumberOfPeriodsIntent':
         return start(event, deps, requestedPeriods(event));
-      case 'CancelVisionStopIntent':
+      case 'CancelVisionProtectIntent':
       case 'AMAZON.CancelIntent':
       case 'AMAZON.StopIntent':
         return cancel(event, deps);
       case 'AMAZON.HelpIntent':
-      case 'AboutVisionStopIntent':
+      case 'AboutVisionProtectIntent':
         return response(
-          'Vision Stop schedules one to five 20-minute focus periods, with a 30 second eye break between periods. Five periods is the default. Say start vision stop to use the default, or say a number from one to five.',
-          { reprompt: 'Say start vision stop, or choose a number from one to five.', endSession: false }
+          'Vision Protect schedules one to five 20-minute focus periods, with a 30 second eye break between periods. Five periods is the default. Say start vision protect to use the default, or say a number from one to five.',
+          { reprompt: 'Say start vision protect, or choose a number from one to five.', endSession: false }
         );
       case 'AMAZON.FallbackIntent':
-        return response('I did not understand that. Say start vision stop, cancel vision stop, or help.', { reprompt: 'What would you like to do?', endSession: false });
+        return response('I did not understand that. Say start vision protect, cancel vision protect, or help.', { reprompt: 'What would you like to do?', endSession: false });
       default:
-        return response('I did not understand that. Say help to hear what Vision Stop can do.');
+        return response('I did not understand that. Say help to hear what Vision Protect can do.');
     }
   }
 
@@ -149,6 +154,6 @@ async function route(event, deps = reminders) {
 
 exports.handler = async event => route(event);
 exports.route = route;
-exports.hasReminderPermission = hasReminderPermission;
+exports.hasReminderApiToken = hasReminderApiToken;
 exports.REMINDERS_PERMISSION = REMINDERS_PERMISSION;
 exports.requestedPeriods = requestedPeriods;

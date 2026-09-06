@@ -1,26 +1,29 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "vision stop",
+      "invocationName": "vision protect",
       "intents": [
         {
-          "name": "StartVisionStopIntent",
+          "name": "StartVisionProtectIntent",
           "samples": [
             "start",
-            "start vision stop",
+            "start vision protect",
             "begin",
             "begin a session",
             "start my screen break timer",
-            "start the vision stop timer"
+            "start the vision protect timer"
           ]
         },
         {
-          "name": "CancelVisionStopIntent",
+          "name": "CancelVisionProtectIntent",
           "samples": [
-            "cancel vision stop",
+            "cancel vision protect",
             "cancel my session",
-            "stop my vision stop session",
-            "delete my vision stop reminders"
+            "stop my vision protect session",
+            "delete my vision protect reminders",
+            "stop my screen break timer",
+            "stop the vision protect timer",
+            "stop vision protect"
           ]
         },
         {
@@ -40,20 +43,38 @@
           ]
         },
         {
-          "name": "AboutVisionStopIntent",
+          "name": "AboutVisionProtectIntent",
           "samples": [
             "what do you do",
             "how does this work",
             "tell me what you do",
-            "what is vision stop"
+            "what is vision protect"
           ]
         },
-        { "name": "AMAZON.YesIntent", "samples": [] },
-        { "name": "AMAZON.NoIntent", "samples": [] },
-        { "name": "AMAZON.HelpIntent", "samples": [] },
-        { "name": "AMAZON.CancelIntent", "samples": [] },
-        { "name": "AMAZON.StopIntent", "samples": [] },
-        { "name": "AMAZON.FallbackIntent", "samples": [] }
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        }
       ],
       "types": []
     }

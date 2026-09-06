@@ -5,10 +5,10 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const yaml = fs.readFileSync(path.join(__dirname, '..', 'google-home', 'vision-stop.yaml'), 'utf8');
+const yaml = fs.readFileSync(path.join(__dirname, '..', 'google-home', 'vision-protect.yaml'), 'utf8');
 
 test('Google Home automation starts with the requested voice phrase', () => {
-  assert.match(yaml, /is: start vision stop/);
+  assert.match(yaml, /is: start vision protect/);
 });
 
 test('Google Home delays total exactly 102 minutes', () => {
@@ -20,6 +20,6 @@ test('Google Home delays total exactly 102 minutes', () => {
 });
 
 test('Google Home automation includes four breaks and final longer-break message', () => {
-  assert.equal((yaml.match(/Eye rest break\./g) || []).length, 4);
+  assert.equal((yaml.match(/Eye break\./g) || []).length, 4);
   assert.match(yaml, /longer break/);
 });

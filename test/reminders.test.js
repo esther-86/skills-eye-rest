@@ -77,3 +77,45 @@ test('createSchedule removes earlier reminders after a partial failure', async (
   assert.equal(calls.at(-1).method, 'DELETE');
   assert.match(calls.at(-1).url, /first-token$/);
 });
+
+
+test('cancel skips completed history and deletes only active reminders', async () => {
+  const calls = [];
+  const count = await cancelSchedule({
+    apiEndpoint: 'https://api.amazonalexa.com', apiAccessToken: 'test-token',
+    request: async options => {
+      calls.push(options);
+      if (options.method === 'GET') return { alerts: [
+        { alertToken: 'done', status: 'COMPLETED' },
+        { alertToken: 'active', status: 'ON' }
+      ] };
+      assert.match(options.url, /\/active$/);
+      return {};
+    }
+  });
+  assert.equal(count, 1);
+  assert.equal(calls.length, 2);
+});
+
+test('cancel tolerates a reminder disappearing after listing', async () => {
+  const count = await cancelSchedule({
+    apiEndpoint: 'https://api.amazonalexa.com', apiAccessToken: 'test-token',
+    request: async options => {
+      if (options.method === 'GET') return { alerts: [{ alertToken: 'gone', status: 'ON' }] };
+      throw Object.assign(new Error('not found'), { statusCode: 404 });
+    }
+  });
+  assert.equal(count, 0);
+});
+
+test('cancel does not hide permission, rate limit, or service failures', async () => {
+  for (const statusCode of [400, 401, 403, 429, 500, 503]) {
+    await assert.rejects(cancelSchedule({
+      apiEndpoint: 'https://api.amazonalexa.com', apiAccessToken: 'test-token',
+      request: async options => {
+        if (options.method === 'GET') return { alerts: [{ alertToken: 'active', status: 'ON' }] };
+        throw Object.assign(new Error('request failed'), { statusCode });
+      }
+    }), error => error.statusCode === statusCode);
+  }
+});

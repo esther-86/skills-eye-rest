@@ -87,13 +87,25 @@ async function cancelSchedule({ apiEndpoint, apiAccessToken, request = requestJs
     token: apiAccessToken
   });
   const alerts = Array.isArray(result.alerts) ? result.alerts : [];
-  // The Reminders API only returns reminders created by this skill.
-  await Promise.all(alerts.map(alert => request({
-    method: 'DELETE',
-    url: `${apiEndpoint}/v1/alerts/reminders/${encodeURIComponent(alert.alertToken)}`,
-    token: apiAccessToken
-  })));
-  return alerts.length;
+  // Alexa lists completed reminders too, but DELETE supports active ones only.
+  // Skip completed history so it cannot prevent starting the next session.
+  const active = alerts.filter(alert => alert.status !== 'COMPLETED');
+  const removed = await Promise.all(active.map(async alert => {
+    try {
+      await request({
+        method: 'DELETE',
+        url: `${apiEndpoint}/v1/alerts/reminders/${encodeURIComponent(alert.alertToken)}`,
+        token: apiAccessToken
+      });
+      return 1;
+    } catch (error) {
+      // A reminder may disappear between listing and deleting it.
+      if (error.statusCode === 404) return 0;
+      // Real failures must still stop replacement to prevent overlapping sessions.
+      throw error;
+    }
+  }));
+  return removed.reduce((count, value) => count + value, 0);
 }
 
 module.exports = {
